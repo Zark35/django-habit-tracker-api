@@ -63,6 +63,66 @@ docker-compose run --rm web python manage.py migrate
 docker-compose run --rm web python manage.py createsuperuser
 ```
 
+## Authentication and Token Usage
+
+1. Open the interactive API documentation:
+
+   ```bash
+   http://localhost:8000/api/docs/
+   ```
+
+2. Locate the `POST /api/auth/login/` endpoint.
+3. Click `Try it out` and replace the request body with your credentials:
+
+   ```json
+   {
+     "email": "admin@example.com",
+     "password": "admin123"
+   }
+   ```
+
+4. Click `Execute`.
+5. Copy the `access` token from the response, for example:
+
+   ```json
+   {
+     "message": "Login successful.",
+     "user": { ... },
+     "tokens": {
+       "access": "<access_token>",
+       "refresh": "<refresh_token>"
+     }
+   }
+   ```
+
+6. In Swagger UI, click the `Authorize` button and paste:
+
+   ```text
+   Bearer <access_token>
+   ```
+
+7. After authorization, Swagger will send the token automatically to protected endpoints.
+
+8. You can also use the access token directly in requests by adding the header:
+
+   ```http
+   Authorization: Bearer <access_token>
+   ```
+
+### What to do with the token
+
+- Use it to call protected endpoints like:
+  - `GET /api/habits/`
+  - `POST /api/habits/`
+  - `GET /api/tracking/`
+  - `POST /api/tracking/`
+  - `GET /api/auth/profile/me/`
+
+- If the access token expires, refresh it at:
+  - `POST /api/auth/refresh_token/`
+
+- You can also use the token in Postman or Insomnia for authenticated requests.
+
 ## Environment Variables
 
 - `SECRET_KEY` - Django secret key
@@ -77,7 +137,10 @@ docker-compose run --rm web python manage.py createsuperuser
 
 ## Main Endpoints
 
-- `/api/auth/` - Authentication endpoints
+- `/api/auth/register/` - Register a new user
+- `/api/auth/login/` - Login and obtain JWT tokens
+- `/api/auth/refresh_token/` - Refresh access token
+- `/api/auth/profile/me/` - Current user profile
 - `/api/habits/` - Habit management
 - `/api/tracking/` - Daily tracking entries
 - `/api/` - API root view (lists available endpoints)

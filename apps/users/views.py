@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_spectacular.utils import extend_schema
 
 from .models import User
 from .serializers import (
@@ -23,6 +24,7 @@ class AuthViewSet(viewsets.ViewSet):
     
     permission_classes = [AllowAny]
     
+    @extend_schema(request=UserRegisterSerializer)
     @action(detail=False, methods=['post'])
     def register(self, request):
         """
@@ -57,6 +59,7 @@ class AuthViewSet(viewsets.ViewSet):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    @extend_schema(request=UserLoginSerializer)
     @action(detail=False, methods=['post'])
     def login(self, request):
         """
