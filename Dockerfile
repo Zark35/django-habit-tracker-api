@@ -42,11 +42,12 @@ COPY . .
 # Create static and media directories
 RUN mkdir -p /app/staticfiles /app/media
 
+# Add the production entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Expose port
 EXPOSE 8000
 
-# Collect static files and run migrations
-RUN python manage.py collectstatic --noinput --clear 2>/dev/null || true
-
-# Run migrations and start server
-CMD ["sh", "-c", "python manage.py migrate && gunicorn habit_tracker.wsgi:application --bind 0.0.0.0:8000 --workers 4"]
+# Default entrypoint runs migrations, collects static, and starts Gunicorn
+CMD ["/app/entrypoint.sh"]
