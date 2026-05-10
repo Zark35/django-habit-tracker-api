@@ -63,6 +63,32 @@ docker-compose run --rm web python manage.py migrate
 docker-compose run --rm web python manage.py createsuperuser
 ```
 
+## Run Tests
+
+If you change or add dependencies, rebuild the Docker image first:
+
+```bash
+docker-compose build --no-cache web
+```
+
+Use Docker to execute the test suite against the Django app and isolated test database:
+
+```bash
+docker-compose run --rm web pytest
+```
+
+If the `pytest` executable is not found in the container, use the Python module directly:
+
+```bash
+docker-compose run --rm web python -m pytest
+```
+
+If you want to reuse the database between runs for faster feedback, use:
+
+```bash
+docker-compose run --rm web python -m pytest --reuse-db
+```
+
 ## Authentication and Token Usage
 
 1. Open the interactive API documentation:

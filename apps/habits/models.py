@@ -46,16 +46,14 @@ class Habit(models.Model):
         from datetime import timedelta
         
         last_7_days = timezone.now() - timedelta(days=7)
-        total_entries = HabitEntry.objects.filter(
-            habit=self,
+        total_entries = self.entries.filter(
             created_at__gte=last_7_days
         ).count()
         
         if total_entries == 0:
             return 0
         
-        completed_entries = HabitEntry.objects.filter(
-            habit=self,
+        completed_entries = self.entries.filter(
             created_at__gte=last_7_days,
             status='completed'
         ).count()
