@@ -50,15 +50,10 @@ jobs:
             --network host \
             -e DATABASE_URL=postgresql://postgres:postgres@localhost:5432/habit_tracker_test \
             -e REDIS_URL=redis://localhost:6379/0 \
+            -e SECRET_KEY=test-secret-key-for-ci \
+            -e DEBUG=False \
             habit-tracker-api:test \
-            python -m pytest --cov=apps --cov-report=xml -v
-      
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v3
-        if: always()
-        with:
-          files: ./coverage.xml
-          fail_ci_if_error: false
+            python -m pytest -v --tb=short
 
   lint:
     runs-on: ubuntu-latest

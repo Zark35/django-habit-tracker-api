@@ -59,15 +59,13 @@ jobs:
           git push origin ${{ steps.version.outputs.new_version }}
       
       - name: Create Release
-        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version.outputs.new_version }}
-          release_name: Release ${{ steps.version.outputs.new_version }}
-          body: ${{ steps.changelog.outputs.changelog }}
-          draft: false
-          prerelease: false
+        run: |
+          gh release create ${{ steps.version.outputs.new_version }} \
+            --title "Release ${{ steps.version.outputs.new_version }}" \
+            --notes "${{ steps.changelog.outputs.changelog }}" \
+            --target main
 
   docker:
     runs-on: ubuntu-latest
