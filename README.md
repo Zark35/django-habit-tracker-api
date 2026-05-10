@@ -104,4 +104,4 @@ docker-compose run --rm web python manage.py createsuperuser
 Developed by Andrés Bohórquez
 
 - GitHub: https://github.com/Zark35
-- LinkedIn: https://linkedin.com/in/tu-perfil
+- LinkedIn: www.linkedin.com/in/andrés-bohórquez-5b2a55340
