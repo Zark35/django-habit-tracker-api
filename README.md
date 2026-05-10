@@ -1,12 +1,12 @@
 # Habit Tracker API
 
-Backend REST API para seguimiento de hábitos construida con Django REST Framework.
+Backend REST API para seguimiento de hï¿½bitos construida con Django REST Framework.
 
-## Descripción
+## Descripciï¿½n
 
-Esta es una API backend profesional diseñada para administrar hábitos, registrar seguimiento diario y proveer autenticación segura mediante JWT. El proyecto está preparado para ejecutarse con Docker, PostgreSQL y Redis.
+Esta es una API backend profesional diseï¿½ada para administrar hï¿½bitos, registrar seguimiento diario y proveer autenticaciï¿½n segura mediante JWT. El proyecto estï¿½ preparado para ejecutarse con Docker, PostgreSQL y Redis.
 
-## Tecnologías
+## Tecnologï¿½as
 
 - Django
 - Django REST Framework
@@ -16,28 +16,28 @@ Esta es una API backend profesional diseñada para administrar hábitos, registrar
 - JWT Authentication
 - Swagger / OpenAPI
 
-## Características
+## Caracterï¿½sticas
 
 - JWT Authentication
-- CRUD de hábitos
-- Seguimiento de hábitos diarios
+- CRUD de hï¿½bitos
+- Seguimiento de hï¿½bitos diarios
 - Dockerized setup
-- Integración con PostgreSQL
-- Documentación Swagger/OpenAPI
+- Integraciï¿½n con PostgreSQL
+- Documentaciï¿½n Swagger/OpenAPI
 - Arquitectura modular
 
 ## Estructura del proyecto
 
 - `apps/` - Aplicaciones Django funcionales
 - `core/` - Utilities y configuraciones compartidas
-- `habit_tracker/` - Configuración principal de Django
+- `habit_tracker/` - Configuraciï¿½n principal de Django
 - `manage.py` - Comandos Django
 - `Dockerfile` - Imagen Docker para la app
-- `docker-compose.yml` - Orquestación Docker
+- `docker-compose.yml` - Orquestaciï¿½n Docker
 - `requirements.txt` - Dependencias Python
 - `.env.example` - Ejemplo de variables de entorno
 
-## Instalación local
+## Instalaciï¿½n local
 
 1. Copiar el archivo de variables de entorno:
 
@@ -68,12 +68,12 @@ docker-compose run --rm web python manage.py createsuperuser
 - `SECRET_KEY` - Clave secreta de Django
 - `DB_NAME` - Nombre de la base de datos PostgreSQL
 - `DB_USER` - Usuario de PostgreSQL
-- `DB_PASSWORD` - Contraseña de PostgreSQL
+- `DB_PASSWORD` - Contraseï¿½a de PostgreSQL
 - `DB_HOST` - Host de la base de datos
 - `DB_PORT` - Puerto de PostgreSQL
 - `JWT_SECRET_KEY` - Clave JWT
 - `REDIS_URL` - URL de Redis
-- `CORS_ALLOWED_ORIGINS` - Orígenes permitidos
+- `CORS_ALLOWED_ORIGINS` - Orï¿½genes permitidos
 
 ## Endpoints principales
 
@@ -88,17 +88,20 @@ docker-compose run --rm web python manage.py createsuperuser
 - ? Docker compatible
 - ? PostgreSQL integrado
 - ? Redis integrado
-- ? Documentación Swagger disponible
+- ? Documentaciï¿½n Swagger disponible
 - ? Estructura limpia y modular
 
 ## Posibles mejoras futuras
 
-- Agregar pruebas unitarias e integración
-- Añadir endpoints analíticos y métricas
+- Agregar pruebas unitarias e integraciï¿½n
+- Aï¿½adir endpoints analï¿½ticos y mï¿½tricas
 - Implementar roles y permisos avanzados
 - Desplegar con CI/CD
-- Añadir casos de uso para notificaciones
+- Aï¿½adir casos de uso para notificaciones
 
 ## Autor
 
+Developed by AndrÃ©s BohÃ³rquez
+
 - GitHub: https://github.com/Zark35
+- LinkedIn: https://linkedin.com/in/tu-perfil
