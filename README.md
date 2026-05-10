@@ -1,194 +1,269 @@
 # Habit Tracker API
 
-Backend REST API for habit tracking built with Django REST Framework.
+![Python](https://img.shields.io/badge/python-3.12-blue)
+![Django](https://img.shields.io/badge/django-4.2.13-092E20)
+![License](https://img.shields.io/badge/license-MIT-green)
+![CI](https://github.com/Zark35/django-habit-tracker-api/actions/workflows/tests.yml/badge.svg)
 
-## Description
+## Overview
 
-This is a professional backend API designed to manage habits, record daily tracking, and provide secure authentication via JWT. The project is ready to run with Docker, PostgreSQL, and Redis.
+Habit Tracker API is a backend-first REST API for mobile habit tracking and productivity apps. The service delivers secure JWT authentication, habit lifecycle management, daily tracking, Redis-backed caching/broker support, and OpenAPI documentation.
 
-## Technologies
+---
 
-- Django
-- Django REST Framework
-- PostgreSQL
-- Redis
-- Docker
-- JWT Authentication
-- Swagger / OpenAPI
+## Architecture
+
+```text
+Mobile Client / Frontend
+          ↓
+   Django REST API
+       /      \
+ PostgreSQL   Redis
+                 │
+               Celery
+```
+
+- **Django REST API**: API layer, business rules, and authorization
+- **PostgreSQL**: persistent storage for users, habits, and entries
+- **Redis**: cache and background task broker
+- **Celery**: asynchronous task processing architecture
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Django 4.2.13, Django REST Framework 3.14.0 |
+| Database | PostgreSQL 15 |
+| Authentication | JWT via djangorestframework-simplejwt |
+| API Docs | drf-spectacular, Swagger, ReDoc |
+| Infrastructure | Docker, docker-compose |
+| Cache / Broker | Redis 7 |
+| Task Queue | Celery 5.3.6 |
+| Testing | pytest, pytest-django, factory-boy |
+
+---
 
 ## Features
 
-- JWT Authentication
-- CRUD operations for habits
-- Daily habit tracking
-- Dockerized setup
-- PostgreSQL integration
-- Swagger/OpenAPI documentation
-- Modular architecture
+- ✅ JWT authentication with access and refresh tokens
+- ✅ Habit CRUD and validation
+- ✅ Daily habit tracking entries
+- ✅ Dockerized local development
+- ✅ Swagger/OpenAPI documentation
+- ✅ Redis integration for cache and task queue
+- ✅ Celery support for async processing
+- ✅ Modular Django app architecture
 
-## Project Structure
+---
 
-- `apps/` - Functional Django applications
-- `core/` - Shared utilities and configurations
-- `habit_tracker/` - Main Django configuration
-- `manage.py` - Django management commands
-- `Dockerfile` - Docker image for the app
-- `docker-compose.yml` - Docker orchestration
-- `requirements.txt` - Python dependencies
-- `.env.example` - Environment variables example
+## Repository Structure
 
-## Local Installation
+```text
+.
+├── .github/                  # CI workflows
+├── apps/                     # Django application modules
+│   ├── habits/               # Habit feature domain
+│   ├── tracking/             # Habit entry tracking domain
+│   └── users/                # Authentication and user APIs
+├── core/                     # Shared utilities and custom exceptions
+├── habit_tracker/            # Django project configuration
+├── docker-compose.yml        # Local orchestration
+├── Dockerfile                # Container build configuration
+├── requirements.txt          # Dependencies
+├── .env.example              # Environment variable template
+└── README.md                 # Project documentation
+```
 
-1. Copy the environment variables file:
+---
+
+## Local Setup
+
+### 1. Clone repository
+
+```bash
+git clone https://github.com/Zark35/django-habit-tracker-api.git
+cd django-habit-tracker-api
+```
+
+### 2. Copy environment file
 
 ```bash
 cp .env.example .env
 ```
 
-2. Start services with Docker:
+### 3. Start containers
 
 ```bash
 docker-compose up --build
 ```
 
-3. Run migrations:
+### 4. Apply database migrations
 
 ```bash
 docker-compose run --rm web python manage.py migrate
 ```
 
-4. Create superuser:
+### 5. Create a superuser
 
 ```bash
 docker-compose run --rm web python manage.py createsuperuser
 ```
 
-## Run Tests
+### 6. Access local services
 
-If you change or add dependencies, rebuild the Docker image first:
+- API root: `http://localhost:8000/api/`
+- Swagger UI: `http://localhost:8000/api/docs/`
+- ReDoc: `http://localhost:8000/api/redoc/`
+- OpenAPI schema: `http://localhost:8000/api/schema/`
+
+---
+
+## Environment Variables
+
+The project uses `.env` for local configuration. Key variables:
+
+| Variable | Description |
+|---|---|
+| `DEBUG` | Enable Django debug mode |
+| `DJANGO_SETTINGS_MODULE` | Django settings module |
+| `SECRET_KEY` | Django application secret |
+| `ALLOWED_HOSTS` | Allowed hostnames |
+| `DB_ENGINE` | Database backend |
+| `DB_NAME` | PostgreSQL database name |
+| `DB_USER` | PostgreSQL user |
+| `DB_PASSWORD` | PostgreSQL password |
+| `DB_HOST` | PostgreSQL host |
+| `DB_PORT` | PostgreSQL port |
+| `JWT_SECRET_KEY` | JWT signing key |
+| `JWT_ALGORITHM` | JWT algorithm |
+| `JWT_EXPIRATION_HOURS` | Access token lifetime |
+| `JWT_REFRESH_EXPIRATION_DAYS` | Refresh token lifetime |
+| `REDIS_URL` | Redis connection URL |
+| `CORS_ALLOWED_ORIGINS` | Accepted frontend origins |
+| `EMAIL_BACKEND` | Django email backend for local dev |
+
+---
+
+## API Documentation
+
+The project includes auto-generated API docs and schema endpoints.
+
+- Swagger UI: `http://localhost:8000/api/docs/`
+- ReDoc: `http://localhost:8000/api/redoc/`
+- OpenAPI schema: `http://localhost:8000/api/schema/`
+
+### Example API endpoints
+
+- `POST /api/auth/register/` — Create a new user
+- `POST /api/auth/login/` — Authenticate and receive JWT tokens
+- `POST /api/auth/refresh_token/` — Refresh access token
+- `GET /api/auth/profile/me/` — Current user profile
+- `GET /api/habits/` — List user habits
+- `POST /api/habits/` — Create a new habit
+- `GET /api/tracking/` — List tracking entries
+- `POST /api/tracking/` — Record a completed habit entry
+
+---
+
+## Authentication Flow
+
+1. Create an account or use the superuser.
+2. Login at `POST /api/auth/login/`.
+3. Copy the returned `access` token.
+4. Authorize Swagger with `Bearer <access_token>`.
+5. Use protected endpoints with the `Authorization` header.
+
+```http
+Authorization: Bearer <access_token>
+```
+
+---
+
+## Testing
+
+Run tests inside Docker:
+
+```bash
+docker-compose run --rm web python -m pytest -q
+```
+
+If dependencies change, rebuild first:
 
 ```bash
 docker-compose build --no-cache web
 ```
 
-Use Docker to execute the test suite against the Django app and isolated test database:
-
-```bash
-docker-compose run --rm web pytest
-```
-
-If the `pytest` executable is not found in the container, use the Python module directly:
-
-```bash
-docker-compose run --rm web python -m pytest
-```
-
-If you want to reuse the database between runs for faster feedback, use:
+Reuse the test database for faster feedback:
 
 ```bash
 docker-compose run --rm web python -m pytest --reuse-db
 ```
 
-## Authentication and Token Usage
+---
 
-1. Open the interactive API documentation:
+## CI / CD
 
-   ```bash
-   http://localhost:8000/api/docs/
-   ```
+The repository includes GitHub Actions workflows for:
 
-2. Locate the `POST /api/auth/login/` endpoint.
-3. Click `Try it out` and replace the request body with your credentials:
+- automated test execution
+- linting and quality validation
+- Docker packaging
 
-   ```json
-   {
-     "email": "admin@example.com",
-     "password": "admin123"
-   }
-   ```
+CI status is surfaced in the README badge.
 
-4. Click `Execute`.
-5. Copy the `access` token from the response, for example:
+---
 
-   ```json
-   {
-     "message": "Login successful.",
-     "user": { ... },
-     "tokens": {
-       "access": "<access_token>",
-       "refresh": "<refresh_token>"
-     }
-   }
-   ```
+## Roadmap
 
-6. In Swagger UI, click the `Authorize` button and paste:
+- Add full unit and integration coverage
+- Implement role-based authorization
+- Add analytics and reporting endpoints
+- Deploy to Render / AWS / Kubernetes
+- Add request rate limiting and caching policies
+- Add email notifications and reminders
 
-   ```text
-   Bearer <access_token>
-   ```
+---
 
-7. After authorization, Swagger will send the token automatically to protected endpoints.
+## Screenshots
 
-8. You can also use the access token directly in requests by adding the header:
+![Swagger UI placeholder](./docs/swagger-ui-placeholder.png)
+![API docs placeholder](./docs/api-docs-placeholder.png)
 
-   ```http
-   Authorization: Bearer <access_token>
-   ```
+---
 
-### What to do with the token
+## Deployment
 
-- Use it to call protected endpoints like:
-  - `GET /api/habits/`
-  - `POST /api/habits/`
-  - `GET /api/tracking/`
-  - `POST /api/tracking/`
-  - `GET /api/auth/profile/me/`
+This backend is ready for future deployment to platforms such as:
 
-- If the access token expires, refresh it at:
-  - `POST /api/auth/refresh_token/`
+- Render
+- AWS Elastic Beanstalk
+- AWS ECS / EKS
+- DigitalOcean App Platform
 
-- You can also use the token in Postman or Insomnia for authenticated requests.
+Deployment should use environment variables and managed PostgreSQL / Redis services.
 
-## Environment Variables
+---
 
-- `SECRET_KEY` - Django secret key
-- `DB_NAME` - PostgreSQL database name
-- `DB_USER` - PostgreSQL user
-- `DB_PASSWORD` - PostgreSQL password
-- `DB_HOST` - Database host
-- `DB_PORT` - PostgreSQL port
-- `JWT_SECRET_KEY` - JWT secret key
-- `REDIS_URL` - Redis URL
-- `CORS_ALLOWED_ORIGINS` - Allowed origins
+## Contributing
 
-## Main Endpoints
+Contributions are welcome. Please use the standard workflow:
 
-- `/api/auth/register/` - Register a new user
-- `/api/auth/login/` - Login and obtain JWT tokens
-- `/api/auth/refresh_token/` - Refresh access token
-- `/api/auth/profile/me/` - Current user profile
-- `/api/habits/` - Habit management
-- `/api/tracking/` - Daily tracking entries
-- `/api/` - API root view (lists available endpoints)
-- `/api/docs/` - Interactive API documentation (Swagger UI)
-- `/api/schema/` - OpenAPI schema (JSON download for API documentation)
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new behavior
+4. Submit a pull request with a clear summary
 
-## Project Status
+Please keep changes modular and preserve existing API contracts.
 
-- ✅ Functional
-- ✅ Docker compatible
-- ✅ PostgreSQL integrated
-- ✅ Redis integrated
-- ✅ Swagger documentation available
-- ✅ Clean and modular structure
+---
 
-## Future Improvements
+## License
 
-- Add unit and integration tests
-- Add analytics and metrics endpoints
-- Implement advanced roles and permissions
-- Deploy with CI/CD
-- Add notification use cases
+This project is released under the MIT License.
+
+---
 
 ## Author
 
