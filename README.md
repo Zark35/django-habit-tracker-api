@@ -1,12 +1,12 @@
 # Habit Tracker API
 
-Backend REST API para seguimiento de h�bitos construida con Django REST Framework.
+Backend REST API for habit tracking built with Django REST Framework.
 
-## Descripci�n
+## Description
 
-Esta es una API backend profesional dise�ada para administrar h�bitos, registrar seguimiento diario y proveer autenticaci�n segura mediante JWT. El proyecto est� preparado para ejecutarse con Docker, PostgreSQL y Redis.
+This is a professional backend API designed to manage habits, record daily tracking, and provide secure authentication via JWT. The project is ready to run with Docker, PostgreSQL, and Redis.
 
-## Tecnolog�as
+## Technologies
 
 - Django
 - Django REST Framework
@@ -16,90 +16,92 @@ Esta es una API backend profesional dise�ada para administrar h�bitos, regis
 - JWT Authentication
 - Swagger / OpenAPI
 
-## Caracter�sticas
+## Features
 
 - JWT Authentication
-- CRUD de h�bitos
-- Seguimiento de h�bitos diarios
+- CRUD operations for habits
+- Daily habit tracking
 - Dockerized setup
-- Integraci�n con PostgreSQL
-- Documentaci�n Swagger/OpenAPI
-- Arquitectura modular
+- PostgreSQL integration
+- Swagger/OpenAPI documentation
+- Modular architecture
 
-## Estructura del proyecto
+## Project Structure
 
-- `apps/` - Aplicaciones Django funcionales
-- `core/` - Utilities y configuraciones compartidas
-- `habit_tracker/` - Configuraci�n principal de Django
-- `manage.py` - Comandos Django
-- `Dockerfile` - Imagen Docker para la app
-- `docker-compose.yml` - Orquestaci�n Docker
-- `requirements.txt` - Dependencias Python
-- `.env.example` - Ejemplo de variables de entorno
+- `apps/` - Functional Django applications
+- `core/` - Shared utilities and configurations
+- `habit_tracker/` - Main Django configuration
+- `manage.py` - Django management commands
+- `Dockerfile` - Docker image for the app
+- `docker-compose.yml` - Docker orchestration
+- `requirements.txt` - Python dependencies
+- `.env.example` - Environment variables example
 
-## Instalaci�n local
+## Local Installation
 
-1. Copiar el archivo de variables de entorno:
+1. Copy the environment variables file:
 
 ```bash
 cp .env.example .env
 ```
 
-2. Iniciar los servicios con Docker:
+2. Start services with Docker:
 
 ```bash
 docker-compose up --build
 ```
 
-3. Ejecutar migraciones:
+3. Run migrations:
 
 ```bash
 docker-compose run --rm web python manage.py migrate
 ```
 
-4. Crear superusuario:
+4. Create superuser:
 
 ```bash
 docker-compose run --rm web python manage.py createsuperuser
 ```
 
-## Variables de entorno
+## Environment Variables
 
-- `SECRET_KEY` - Clave secreta de Django
-- `DB_NAME` - Nombre de la base de datos PostgreSQL
-- `DB_USER` - Usuario de PostgreSQL
-- `DB_PASSWORD` - Contrase�a de PostgreSQL
-- `DB_HOST` - Host de la base de datos
-- `DB_PORT` - Puerto de PostgreSQL
-- `JWT_SECRET_KEY` - Clave JWT
-- `REDIS_URL` - URL de Redis
-- `CORS_ALLOWED_ORIGINS` - Or�genes permitidos
+- `SECRET_KEY` - Django secret key
+- `DB_NAME` - PostgreSQL database name
+- `DB_USER` - PostgreSQL user
+- `DB_PASSWORD` - PostgreSQL password
+- `DB_HOST` - Database host
+- `DB_PORT` - PostgreSQL port
+- `JWT_SECRET_KEY` - JWT secret key
+- `REDIS_URL` - Redis URL
+- `CORS_ALLOWED_ORIGINS` - Allowed origins
 
-## Endpoints principales
+## Main Endpoints
 
-- `/api/auth/`
-- `/api/habits/`
-- `/api/tracking/`
-- `/api/docs/`
+- `/api/auth/` - Authentication endpoints
+- `/api/habits/` - Habit management
+- `/api/tracking/` - Daily tracking entries
+- `/api/` - API root view (lists available endpoints)
+- `/api/docs/` - Interactive API documentation (Swagger UI)
+- `/api/schema/` - OpenAPI schema (JSON download for API documentation)
 
-## Estado del proyecto
+## Project Status
 
-- ? Funcional
-- ? Docker compatible
-- ? PostgreSQL integrado
-- ? Redis integrado
-- ? Documentaci�n Swagger disponible
-- ? Estructura limpia y modular
+- ✅ Functional
+- ✅ Docker compatible
+- ✅ PostgreSQL integrated
+- ✅ Redis integrated
+- ✅ Swagger documentation available
+- ✅ Clean and modular structure
 
-## Posibles mejoras futuras
+## Future Improvements
 
-- Agregar pruebas unitarias e integraci�n
-- A�adir endpoints anal�ticos y m�tricas
-- Implementar roles y permisos avanzados
-- Desplegar con CI/CD
-- A�adir casos de uso para notificaciones
+- Add unit and integration tests
+- Add analytics and metrics endpoints
+- Implement advanced roles and permissions
+- Deploy with CI/CD
+- Add notification use cases
 
-## Autor
+## Author
 
 Developed by Andrés Bohórquez
 
