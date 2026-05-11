@@ -244,6 +244,10 @@ This backend is ready for future deployment to platforms such as:
 
 Deployment should use environment variables and managed PostgreSQL / Redis services.
 
+### Live deployment
+- The application is deployed in Render: https://django-habit-tracker-api.onrender.com
+- Public Swagger UI: https://django-habit-tracker-api.onrender.com/api/docs/#/auth/auth_login_create
+
 ---
 
 ## Contributing
@@ -271,3 +275,4 @@ Developed by Andrés Bohórquez
 
 - GitHub: https://github.com/Zark35
 - LinkedIn: www.linkedin.com/in/andrés-bohórquez-5b2a55340
+- Public Swagger UI: https://django-habit-tracker-api.onrender.com/api/docs/#/auth/auth_login_create
